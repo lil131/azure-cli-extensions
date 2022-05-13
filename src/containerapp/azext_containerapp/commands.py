@@ -73,6 +73,11 @@ def load_command_table(self, _):
         g.custom_command('set', 'create_or_update_dapr_component')
         g.custom_command('remove', 'remove_dapr_component')
 
+    with self.command_group('containerapp env certificate') as g:
+        g.custom_command('list', 'list_certificates')
+        g.custom_command('upload', 'upload_certificate')
+        g.custom_command('delete', 'delete_certificate', confirmation=True, exception_handler=ex_handler_factory())
+
     with self.command_group('containerapp identity') as g:
         g.custom_command('assign', 'assign_managed_identity', supports_no_wait=True, exception_handler=ex_handler_factory())
         g.custom_command('remove', 'remove_managed_identity', supports_no_wait=True, exception_handler=ex_handler_factory())

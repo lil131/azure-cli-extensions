@@ -147,6 +147,19 @@ def load_arguments(self, _):
     with self.argument_context('containerapp env show') as c:
         c.argument('name', name_type, help='Name of the Container Apps Environment.')
 
+    with self.argument_context('containerapp env certificate upload') as c:
+        c.argument('certificate_file', options_list=['--certificate-file', '-file'], help='The filepath of the .pfx or .pem file')
+        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which should be unique within the Container Apps environment.')
+        c.argument('certificate_password', options_list=['--password', '-p'], help='The certificate file password')
+
+    with self.argument_context('containerapp env certificate list') as c:
+        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which is unique within the Container Apps environment.')
+        c.argument('thumbprint', options_list=['--thumbprint', '-t'], help='Thumbprint of the certificate.')
+
+    with self.argument_context('containerapp env certificate delete') as c:
+        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which is unique within the Container Apps environment.')
+        c.argument('thumbprint', options_list=['--thumbprint', '-t'], help='Thumbprint of the certificate.')
+
     with self.argument_context('containerapp identity') as c:
         c.argument('user_assigned', nargs='+', help="Space-separated user identities.")
         c.argument('system_assigned', help="Boolean indicating whether to assign system-assigned identity.")

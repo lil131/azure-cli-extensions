@@ -181,6 +181,14 @@ ContainerApp = {
     "tags": None
 }
 
+ContainerAppCertificate = {
+    "location": None,
+    "properties": {
+        "password": None,
+        "value": None
+    }
+}
+
 DaprComponent = {
     "properties": {
         "componentType": None,  # String

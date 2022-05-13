@@ -110,3 +110,56 @@ class ContainerappEnvScenarioTest(ScenarioTest):
         self.cmd('containerapp env dapr-component list -n {} -g {}'.format(env_name, resource_group), checks=[
             JMESPathCheck('length(@)', 0),
         ])
+
+    @AllowLargeResponse(8192)
+    @ResourceGroupPreparer(location="northeurope")
+    def test_containerapp_env_certificate_e2e(self, resource_group):
+        env_name = self.create_random_name(prefix='containerapp-e2e-env', length=24)
+        logs_workspace_name = self.create_random_name(prefix='containerapp-env', length=24)
+
+        logs_workspace_id = self.cmd('monitor log-analytics workspace create -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["customerId"]
+        logs_workspace_key = self.cmd('monitor log-analytics workspace get-shared-keys -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["primarySharedKey"]
+
+        self.cmd('containerapp env create -g {} -n {} --logs-workspace-id {} --logs-workspace-key {}'.format(resource_group, env_name, logs_workspace_id, logs_workspace_key))
+
+        containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        while containerapp_env["properties"]["provisioningState"].lower() == "waiting":
+            time.sleep(5)
+            containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        self.cmd('containerapp env certificate list -g {} -n {}'.format(resource_group, env_name), checks=[
+            JMESPathCheck('length(@)', 0),
+        ])
+        
+        pfx_file = os.path.join(TEST_DIR, 'cert.pfx')
+        cert_password = 'test12'
+        cert_thumbprint = '6C9E3B69C4C0D50DC735D6027D075A6C500AEF63'
+        cert_name = self.cmd('containerapp env certificate upload -g {} -n {} -file "{}" -p {}'.format(resource_group, env_name, pfx_file, cert_password), checks=[
+            JMESPathCheck('properties.thumbprint', cert_thumbprint),
+            JMESPathCheck('type', "Microsoft.App/managedEnvironments/certificates"),
+        ]).get_output_in_json()['name']
+
+        self.cmd('containerapp env certificate list -n {} -g {}'.format(env_name, resource_group), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
+            JMESPathCheck('[0].name', cert_name),
+        ])
+        
+        self.cmd('containerapp env certificate list -n {} -g {} -cert {}'.format(env_name, resource_group, cert_name), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
+        ])
+        
+        self.cmd('containerapp env certificate list -n {} -g {} -t {}'.format(env_name, resource_group, cert_thumbprint), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
+        ])
+        
+        self.cmd('containerapp env certificate delete -n {} -g {} --thumbprint {} --yes'.format(env_name, resource_group, cert_thumbprint))
+
+        self.cmd('containerapp env certificate list -g {} -n {}'.format(resource_group, env_name), checks=[
+            JMESPathCheck('length(@)', 0),
+        ])

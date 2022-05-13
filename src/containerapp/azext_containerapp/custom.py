@@ -8,6 +8,7 @@ import threading
 import sys
 import time
 from urllib.parse import urlparse
+import os
 import requests
 
 from azure.cli.core.azclierror import (
@@ -16,7 +17,8 @@ from azure.cli.core.azclierror import (
     ResourceNotFoundError,
     CLIError,
     CLIInternalError,
-    InvalidArgumentValueError)
+    InvalidArgumentValueError,
+    FileOperationError)
 from azure.cli.core.commands.client_factory import get_subscription_id
 from azure.cli.core.util import open_page_in_browser
 from knack.log import get_logger
@@ -45,7 +47,8 @@ from ._models import (
     RegistryInfo as RegistryInfoModel,
     AzureCredentials as AzureCredentialsModel,
     SourceControl as SourceControlModel,
-    ManagedServiceIdentity as ManagedServiceIdentityModel)
+    ManagedServiceIdentity as ManagedServiceIdentityModel,
+    ContainerAppCertificate as ContainerAppCertificateModel)
 from ._utils import (_validate_subscription_registered, _get_location_from_resource_group, _ensure_location_allowed,
                      parse_secret_flags, store_as_secret_and_return_secret_ref, parse_env_var_flags,
                      _generate_log_analytics_if_not_provided, _get_existing_secrets, _convert_object_from_snake_to_camel_case,
@@ -54,11 +57,11 @@ from ._utils import (_validate_subscription_registered, _get_location_from_resou
                      _get_app_from_revision, raise_missing_token_suggestion, _infer_acr_credentials, _remove_registry_secret, _remove_secret,
                      _ensure_identity_resource_id, _remove_dapr_readonly_attributes, _remove_env_vars,
                      _update_revision_env_secretrefs, _get_acr_cred, safe_get, await_github_action, repo_url_to_name,
-                     validate_container_app_name)
+                     validate_container_app_name, get_randomized_cert_name)
 
 from ._ssh_utils import (SSH_DEFAULT_ENCODING, WebSocketConnection, read_ssh, get_stdin_writer, SSH_CTRL_C_MSG,
                          SSH_BACKUP_ENCODING)
-from ._constants import MAXIMUM_SECRET_LENGTH
+from ._constants import (MAXIMUM_SECRET_LENGTH, CHECK_CERTIFICATE_NAME_AVAILABILITY_TYPE)
 
 logger = get_logger(__name__)
 
@@ -2015,7 +2018,7 @@ def containerapp_up(cmd,
                     service_principal_tenant_id=None):
     from ._up_utils import (_validate_up_args, _reformat_image, _get_dockerfile_content, _get_ingress_and_target_port,
                             ResourceGroup, ContainerAppEnvironment, ContainerApp, _get_registry_from_app,
-                            _get_registry_details, _create_github_action, _set_up_defaults, up_output, AzureContainerRegistry,
+                            _get_registry_details, _create_github_action, _set_up_defaults, up_output,
                             check_env_name_on_rg)
     HELLOWORLD = "mcr.microsoft.com/azuredocs/containerapps-helloworld"
     dockerfile = "Dockerfile"  # for now the dockerfile name must be "Dockerfile" (until GH actions API is updated)
@@ -2201,3 +2204,127 @@ def containerapp_up_logic(cmd, resource_group_name, name, managed_env, image, en
         return ContainerAppClient.create_or_update(cmd, resource_group_name, name, containerapp_def)
     except Exception as e:
         handle_raw_exception(e)
+
+
+def list_certificates(cmd, name, resource_group_name, location=None, certificate_name=None, thumbprint=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    def location_match(c):
+        return c["location"] == location or not location
+
+    def thumbprint_match(c):
+        return c["properties"]["thumbprint"] == thumbprint or not thumbprint
+
+    def both_match(c):
+        return location_match(c) and thumbprint_match(c)
+
+    if certificate_name:
+        try:
+            r = ManagedEnvironmentClient.show_certificate(cmd, resource_group_name, name, certificate_name)
+            return [r] if both_match(r) else []
+        except Exception as e:
+            handle_raw_exception(e)
+    else:
+        try:
+            r = ManagedEnvironmentClient.list_certificates(cmd, resource_group_name, name)
+            return list(filter(both_match, r))
+        except Exception as e:
+            handle_raw_exception(e)
+
+
+def upload_certificate(cmd, name, resource_group_name, certificate_file, certificate_name=None, certificate_password=None, location=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    blob, thumbprint = _load_cert_file(certificate_file, certificate_password)
+
+    cert_name = None
+    if certificate_name:
+        if not _check_cert_name_availability(cmd, resource_group_name, name, certificate_name):
+            from knack.prompting import prompt_y_n
+            msg = 'A certificate with the name {} already exists in {}. If continue with this name, it will be overwritten by the new certificate file.\nOverwrite?'
+            overwrite = prompt_y_n(msg.format(certificate_name, name))
+            if overwrite:
+                cert_name = certificate_name
+        else:
+            cert_name = certificate_name
+
+    while not cert_name:
+        random_name = get_randomized_cert_name(thumbprint, name, resource_group_name)
+        if _check_cert_name_availability(cmd, resource_group_name, name, random_name):
+            cert_name = random_name
+
+    certificate = ContainerAppCertificateModel
+    certificate["properties"]["password"] = certificate_password
+    certificate["properties"]["value"] = blob
+    certificate["location"] = location
+    if not certificate["location"]:
+        try:
+            managed_env = ManagedEnvironmentClient.show(cmd, resource_group_name, name)
+        except Exception as e:
+            handle_raw_exception(e)
+        certificate["location"] = managed_env["location"]
+
+    try:
+        r = ManagedEnvironmentClient.create_or_update_certificate(cmd, resource_group_name, name, cert_name, certificate)
+        return r
+    except Exception as e:
+        handle_raw_exception(e)
+
+
+def _check_cert_name_availability(cmd, resource_group_name, name, cert_name):
+    name_availability_request = {}
+    name_availability_request["name"] = cert_name
+    name_availability_request["type"] = CHECK_CERTIFICATE_NAME_AVAILABILITY_TYPE
+    try:
+        r = ManagedEnvironmentClient.check_name_availability(cmd, resource_group_name, name, name_availability_request)
+        return r["nameAvailable"]
+    except Exception as e:
+        handle_raw_exception(e)
+
+
+def _load_cert_file(file_path, cert_password=None):
+    from base64 import b64encode
+    from OpenSSL import crypto
+
+    file_data = None
+    thumbprint = None
+    blob = None
+    try:
+        f = open(file_path, "rb")
+    except FileNotFoundError:
+        raise FileOperationError("No such file: " + str(file_path))
+    if os.path.splitext(file_path)[1] in ['.pem']:
+        file_data = f.read()
+        x509 = crypto.load_certificate(crypto.FILETYPE_PEM, file_data)
+        digest_algorithm = 'sha1'
+        thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
+        blob = b64encode(file_data).decode("utf-8")
+    elif os.path.splitext(file_path)[1] in ['.pfx']:
+        file_data = f.read()
+        try:
+            p12 = crypto.load_pkcs12(file_data, cert_password)
+        except FileOperationError:
+            raise FileOperationError('Failed to load the certificate file. This may be due to a wrong password. Please double check your password and try again.')
+        x509 = p12.get_certificate()
+        digest_algorithm = 'sha1'
+        thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
+        pem_data = crypto.dump_certificate(crypto.FILETYPE_PEM, x509)
+        blob = b64encode(pem_data).decode("utf-8")
+    else:
+        raise FileOperationError('Not a valid file type. Only .PFX and .PEM files are supported.')
+
+    return blob, thumbprint
+
+
+def delete_certificate(cmd, resource_group_name, name, location=None, certificate_name=None, thumbprint=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    if not certificate_name and not thumbprint:
+        raise CLIError('Please specify one of parameters: --certificate-name or --thumbprint/-f')
+    certs = list_certificates(cmd, name, resource_group_name, location, certificate_name, thumbprint)
+    for cert in certs:
+        try:
+            ManagedEnvironmentClient.delete_certificate(cmd, resource_group_name, name, cert["name"])
+            logger.warning('Successfully deleted certificate: {}'.format(cert["name"]))
+        except Exception as e:
+            handle_raw_exception(e)
