@@ -255,3 +255,10 @@ ContainerAppCustomDomain = {
     "bindingType": "SniEnabled",
     "certificateId": None
 }
+
+AzureFileProperties = {
+    "accountName": None,
+    "accountKey": None,
+    "accessMode": None,
+    "shareName": None
+}

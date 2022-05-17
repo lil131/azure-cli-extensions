@@ -7,7 +7,7 @@ import os
 import time
 import unittest
 
-from azure.cli.testsdk.scenario_tests import AllowLargeResponse
+from azure.cli.testsdk.scenario_tests import AllowLargeResponse, live_only
 from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer, JMESPathCheck)
 
 
@@ -234,7 +234,7 @@ class ContainerappIngressTests(ScenarioTest):
             JMESPathCheck('targetPort', 80),
         ])
 
-        self.cmd('containerapp ingress traffic set -g {} -n {} --traffic-weight latest=100'.format(resource_group, ca_name), checks=[
+        self.cmd('containerapp ingress traffic set -g {} -n {} --revision-weight latest=100'.format(resource_group, ca_name), checks=[
             JMESPathCheck('[0].latestRevision', True),
             JMESPathCheck('[0].weight', 100),
         ])
@@ -243,7 +243,7 @@ class ContainerappIngressTests(ScenarioTest):
 
         revisions_list = self.cmd('containerapp revision list -g {} -n {}'.format(resource_group, ca_name)).get_output_in_json()
 
-        self.cmd('containerapp ingress traffic set -g {} -n {} --traffic-weight latest=50 {}=50'.format(resource_group, ca_name, revisions_list[0]["name"]), checks=[
+        self.cmd('containerapp ingress traffic set -g {} -n {} --revision-weight latest=50 {}=50'.format(resource_group, ca_name, revisions_list[0]["name"]), checks=[
             JMESPathCheck('[0].latestRevision', True),
             JMESPathCheck('[0].weight', 50),
             JMESPathCheck('[1].revisionName', revisions_list[0]["name"]),
@@ -312,4 +312,96 @@ class ContainerappIngressTests(ScenarioTest):
         self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', hostname_2),
+        ])
+
+class ContainerappDaprTests(ScenarioTest):
+    @AllowLargeResponse(8192)
+    @ResourceGroupPreparer(location="eastus2")
+    def test_containerapp_dapr_e2e(self, resource_group):
+        env_name = self.create_random_name(prefix='containerapp-env', length=24)
+        ca_name = self.create_random_name(prefix='containerapp', length=24)
+        logs_workspace_name = self.create_random_name(prefix='containerapp-env', length=24)
+
+        logs_workspace_id = self.cmd('monitor log-analytics workspace create -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["customerId"]
+        logs_workspace_key = self.cmd('monitor log-analytics workspace get-shared-keys -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["primarySharedKey"]
+
+        self.cmd('containerapp env create -g {} -n {} --logs-workspace-id {} --logs-workspace-key {}'.format(resource_group, env_name, logs_workspace_id, logs_workspace_key))
+
+        containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        while containerapp_env["properties"]["provisioningState"].lower() == "waiting":
+            time.sleep(5)
+            containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        self.cmd('containerapp create -g {} -n {} --environment {}'.format(resource_group, ca_name, env_name))
+
+        self.cmd('containerapp dapr enable -g {} -n {} --dapr-app-id containerapp1 --dapr-app-port 80 --dapr-app-protocol http'.format(resource_group, ca_name, env_name), checks=[
+            JMESPathCheck('appId', "containerapp1"),
+            JMESPathCheck('appPort', 80),
+            JMESPathCheck('appProtocol', "http"),
+            JMESPathCheck('enabled', True),
+        ])
+
+        self.cmd('containerapp show -g {} -n {}'.format(resource_group, ca_name), checks=[
+            JMESPathCheck('properties.configuration.dapr.appId', "containerapp1"),
+            JMESPathCheck('properties.configuration.dapr.appPort', 80),
+            JMESPathCheck('properties.configuration.dapr.appProtocol', "http"),
+            JMESPathCheck('properties.configuration.dapr.enabled', True),
+        ])
+
+        self.cmd('containerapp dapr disable -g {} -n {}'.format(resource_group, ca_name, env_name), checks=[
+            JMESPathCheck('appId', "containerapp1"),
+            JMESPathCheck('appPort', 80),
+            JMESPathCheck('appProtocol', "http"),
+            JMESPathCheck('enabled', False),
+        ])
+
+        self.cmd('containerapp show -g {} -n {}'.format(resource_group, ca_name), checks=[
+            JMESPathCheck('properties.configuration.dapr.appId', "containerapp1"),
+            JMESPathCheck('properties.configuration.dapr.appPort', 80),
+            JMESPathCheck('properties.configuration.dapr.appProtocol', "http"),
+            JMESPathCheck('properties.configuration.dapr.enabled', False),
+        ])
+
+class ContainerappEnvStorageTests(ScenarioTest):
+    @AllowLargeResponse(8192)
+    @ResourceGroupPreparer(location="eastus")
+    def test_containerapp_env_storage(self, resource_group):
+        env_name = self.create_random_name(prefix='containerapp-env', length=24)
+        storage_name = self.create_random_name(prefix='storage', length=24)
+        shares_name = self.create_random_name(prefix='share', length=24)
+        logs_workspace_name = self.create_random_name(prefix='containerapp-env', length=24)
+
+        logs_workspace_id = self.cmd('monitor log-analytics workspace create -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["customerId"]
+        logs_workspace_key = self.cmd('monitor log-analytics workspace get-shared-keys -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["primarySharedKey"]
+
+        self.cmd('containerapp env create -g {} -n {} --logs-workspace-id {} --logs-workspace-key {}'.format(resource_group, env_name, logs_workspace_id, logs_workspace_key))
+
+        containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        while containerapp_env["properties"]["provisioningState"].lower() == "waiting":
+            time.sleep(5)
+            containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        self.cmd('storage account create -g {} -n {} --kind StorageV2 --sku Standard_ZRS --enable-large-file-share'.format(resource_group, storage_name))
+        self.cmd('storage share-rm create -g {} -n {} --storage-account {} --access-tier "TransactionOptimized" --quota 1024'.format(resource_group, shares_name, storage_name))
+
+        storage_keys = self.cmd('az storage account keys list -g {} -n {}'.format(resource_group, storage_name)).get_output_in_json()[0]
+
+        self.cmd('containerapp env storage set -g {} -n {} --storage-name {} --azure-file-account-name {} --azure-file-account-key {} --access-mode ReadOnly --azure-file-share-name {}'.format(resource_group, env_name, storage_name, storage_name, storage_keys["value"], shares_name), checks=[
+            JMESPathCheck('name', storage_name),
+        ])
+
+        self.cmd('containerapp env storage show -g {} -n {} --storage-name {}'.format(resource_group, env_name, storage_name), checks=[
+            JMESPathCheck('name', storage_name),
+        ])
+
+        self.cmd('containerapp env storage list -g {} -n {}'.format(resource_group, env_name), checks=[
+            JMESPathCheck('[0].name', storage_name),
+        ])
+
+        self.cmd('containerapp env storage remove -g {} -n {} --storage-name {} --yes'.format(resource_group, env_name, storage_name))
+
+        self.cmd('containerapp env storage list -g {} -n {}'.format(resource_group, env_name), checks=[
+            JMESPathCheck('length(@)', 0),
         ])

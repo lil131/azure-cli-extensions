@@ -280,6 +280,12 @@ helps['aks create'] = """
         - name: --attach-acr
           type: string
           short-summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
+        - name: --enable-apiserver-vnet-integration
+          type: bool
+          short-summary: Enable integration of user vnet with control plane apiserver pods.
+        - name: --apiserver-subnet-id
+          type: string
+          short-summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration)
         - name: --enable-private-cluster
           type: string
           short-summary: Enable private cluster.
@@ -356,6 +362,15 @@ helps['aks create'] = """
         - name: --enable-workload-identity
           type: bool
           short-summary: (PREVIEW) Enable workload identity addon.
+        - name: --disable-disk-driver
+          type: bool
+          short-summary: Disable AzureDisk CSI Driver.
+        - name: --disable-file-driver
+          type: bool
+          short-summary: Disable AzureFile CSI Driver.
+        - name: --disable-snapshot-controller
+          type: bool
+          short-summary: Disable CSI Snapshot Controller.
         - name: --aci-subnet-name
           type: string
           short-summary: The name of a subnet in an existing VNet into which to deploy the virtual nodes.
@@ -648,6 +663,24 @@ helps['aks update'] = """
         - name: --rotation-poll-interval
           type: string
           short-summary: Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+        - name: --enable-disk-driver
+          type: bool
+          short-summary: Enable AzureDisk CSI Driver.
+        - name: --disable-disk-driver
+          type: bool
+          short-summary: Disable AzureDisk CSI Driver.
+        - name: --enable-file-driver
+          type: bool
+          short-summary: Enable AzureFile CSI Driver.
+        - name: --disable-file-driver
+          type: bool
+          short-summary: Disable AzureFile CSI Driver.
+        - name: --enable-snapshot-controller
+          type: bool
+          short-summary: Enable Snapshot Controller.
+        - name: --disable-snapshot-controller
+          type: bool
+          short-summary: Disable CSI Snapshot Controller.
         - name: --tags
           type: string
           short-summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -710,6 +743,12 @@ helps['aks update'] = """
         - name: --azure-keyvault-kms-key-id
           type: string
           short-summary: Identifier of Azure Key Vault key.
+        - name: --enable-apiserver-vnet-integration
+          type: bool
+          short-summary: Enable integration of user vnet with control plane apiserver pods.
+        - name: --apiserver-subnet-id
+          type: string
+          short-summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration)
     examples:
       - name: Reconcile the cluster back to its current state.
         text: az aks update -g MyResourceGroup -n MyManagedCluster
@@ -1013,7 +1052,7 @@ helps['aks nodepool add'] = """
           short-summary: The OS Type. Linux or Windows.
         - name: --os-sku
           type: string
-          short-summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
+          short-summary: The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019 or Windows2022 when os-type is Windows, the current default is Windows2019 if not set, and the default will be changed to Windows2022 after Windows2019 is deprecated.
         - name: --enable-fips-image
           type: bool
           short-summary: Use FIPS-enabled OS on agent nodes.
