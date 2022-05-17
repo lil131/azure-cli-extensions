@@ -48,7 +48,9 @@ from ._models import (
     AzureCredentials as AzureCredentialsModel,
     SourceControl as SourceControlModel,
     ManagedServiceIdentity as ManagedServiceIdentityModel,
-    ContainerAppCertificate as ContainerAppCertificateModel)
+    ContainerAppCertificate as ContainerAppCertificateModel,
+    ContainerAppCustomDomainEnvelope as ContainerAppCustomDomainEnvelopeModel,
+    ContainerAppCustomDomain as ContainerAppCustomDomainModel)
 from ._utils import (_validate_subscription_registered, _get_location_from_resource_group, _ensure_location_allowed,
                      parse_secret_flags, store_as_secret_and_return_secret_ref, parse_env_var_flags,
                      _generate_log_analytics_if_not_provided, _get_existing_secrets, _convert_object_from_snake_to_camel_case,
@@ -57,7 +59,7 @@ from ._utils import (_validate_subscription_registered, _get_location_from_resou
                      _get_app_from_revision, raise_missing_token_suggestion, _infer_acr_credentials, _remove_registry_secret, _remove_secret,
                      _ensure_identity_resource_id, _remove_dapr_readonly_attributes, _remove_env_vars,
                      _update_revision_env_secretrefs, _get_acr_cred, safe_get, await_github_action, repo_url_to_name,
-                     validate_container_app_name, get_randomized_cert_name)
+                     validate_container_app_name, get_randomized_cert_name, _get_name)
 
 from ._ssh_utils import (SSH_DEFAULT_ENCODING, WebSocketConnection, read_ssh, get_stdin_writer, SSH_CTRL_C_MSG,
                          SSH_BACKUP_ENCODING)
@@ -2260,9 +2262,9 @@ def upload_certificate(cmd, name, resource_group_name, certificate_file, certifi
     if not certificate["location"]:
         try:
             managed_env = ManagedEnvironmentClient.show(cmd, resource_group_name, name)
+            certificate["location"] = managed_env["location"]
         except Exception as e:
             handle_raw_exception(e)
-        certificate["location"] = managed_env["location"]
 
     try:
         r = ManagedEnvironmentClient.create_or_update_certificate(cmd, resource_group_name, name, cert_name, certificate)
@@ -2291,8 +2293,8 @@ def _load_cert_file(file_path, cert_password=None):
     blob = None
     try:
         f = open(file_path, "rb")
-    except FileNotFoundError:
-        raise FileOperationError("No such file: " + str(file_path))
+    except Exception as e:
+        raise FileOperationError(e)
     if os.path.splitext(file_path)[1] in ['.pem']:
         file_data = f.read()
         x509 = crypto.load_certificate(crypto.FILETYPE_PEM, file_data)
@@ -2303,8 +2305,8 @@ def _load_cert_file(file_path, cert_password=None):
         file_data = f.read()
         try:
             p12 = crypto.load_pkcs12(file_data, cert_password)
-        except FileOperationError:
-            raise FileOperationError('Failed to load the certificate file. This may be due to a wrong password. Please double check your password and try again.')
+        except Exception as e:
+            raise FileOperationError('Failed to load the certificate file. This may be due to an incorrect or missing password. Please double check and try again.\nError: {}'.format(e))
         x509 = p12.get_certificate()
         digest_algorithm = 'sha1'
         thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
@@ -2320,7 +2322,7 @@ def delete_certificate(cmd, resource_group_name, name, location=None, certificat
     _validate_subscription_registered(cmd, "Microsoft.App")
 
     if not certificate_name and not thumbprint:
-        raise CLIError('Please specify one of parameters: --certificate-name or --thumbprint/-f')
+        raise CLIError('Please specify one of parameters: --certificate-name or --thumbprint')
     certs = list_certificates(cmd, name, resource_group_name, location, certificate_name, thumbprint)
     for cert in certs:
         try:
@@ -2328,3 +2330,130 @@ def delete_certificate(cmd, resource_group_name, name, location=None, certificat
             logger.warning('Successfully deleted certificate: {}'.format(cert["name"]))
         except Exception as e:
             handle_raw_exception(e)
+
+
+def upload_ssl(cmd, resource_group_name, name, environment, certificate_file, hostname, certificate_password=None, certificate_name=None, location=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    passed, message = is_hostname_validated(cmd, resource_group_name, name, hostname)
+    if not passed:
+        raise CLIError(message or 'Please configure the DNS records before adding the hostname.')
+
+    custom_domains = _get_custom_domains(cmd, resource_group_name, name, location, environment)
+    new_custom_domains = list(filter(lambda c: c["name"] != hostname, custom_domains))
+
+    if is_valid_resource_id(environment):
+        cert = upload_certificate(cmd, _get_name(environment), parse_resource_id(environment)["resource_group"], certificate_file, certificate_name, certificate_password, location)
+    else:
+        cert = upload_certificate(cmd, _get_name(environment), resource_group_name, certificate_file, certificate_name, certificate_password, location)
+    cert_id = cert["id"]
+
+    new_domain = ContainerAppCustomDomainModel
+    new_domain["name"] = hostname
+    new_domain["certificateId"] = cert_id
+    new_custom_domains.append(new_domain)
+    try:
+        r = _patch_new_custom_domain(cmd, resource_group_name, name, new_custom_domains)
+        return r
+    except Exception as e:
+        handle_raw_exception(e)
+
+
+def _patch_new_custom_domain(cmd, resource_group_name, name, new_custom_domains):
+    envelope = ContainerAppCustomDomainEnvelopeModel
+    envelope["properties"]["configuration"]["ingress"]["customDomains"] = new_custom_domains
+    return ContainerAppClient.update(cmd, resource_group_name, name, envelope)
+
+
+def _get_custom_domains(cmd, resource_group_name, name, location=None, environment=None):
+    try:
+        app = ContainerAppClient.show(cmd=cmd, resource_group_name=resource_group_name, name=name)
+        if location and (app["location"] != location):
+            raise CLIError('Container app {} is not in location {}.'.format(name, location))
+        if environment and (_get_name(environment) != _get_name(app["properties"]["managedEnvironmentId"])):
+            raise CLIError('Container app {} is not under environment {}.'.format(name, environment))
+        if "ingress" in app["properties"]["configuration"] and "customDomains" in app["properties"]["configuration"]["ingress"]:
+            custom_domains = app["properties"]["configuration"]["ingress"]["customDomains"]
+        else:
+            custom_domains = []
+    except Exception as e:
+        handle_raw_exception(e)
+    return custom_domains
+
+
+def bind_hostname(cmd, resource_group_name, name, hostname, thumbprint=None, certificate=None, location=None, environment=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    if not thumbprint and not certificate:
+        raise CLIError('Please specify one of parameters: --certificate or --thumbprint')
+    if not environment and not certificate:
+        raise CLIError('Please specify one of parameters: --certificate or --environment')
+    if certificate and not is_valid_resource_id(certificate) and not environment:
+        raise CLIError('Please specify the parameters: --environment')
+
+    passed, message = is_hostname_validated(cmd, resource_group_name, name, hostname)
+    if not passed:
+        raise CLIError(message or 'Please configure the DNS records before adding the hostname.')
+
+    env_name = None
+    cert_name = None
+    cert_id = None
+    if certificate:
+        if is_valid_resource_id(certificate):
+            cert_id = certificate
+        else:
+            cert_name = certificate
+    if environment:
+        env_name = _get_name(environment)
+    if not cert_id:
+        certs = list_certificates(cmd, env_name, resource_group_name, location, cert_name, thumbprint)
+        cert_id = certs[0]["id"]
+
+    custom_domains = _get_custom_domains(cmd, resource_group_name, name, location, environment)
+    new_custom_domains = list(filter(lambda c: c["name"] != hostname, custom_domains))
+    new_domain = ContainerAppCustomDomainModel
+    new_domain["name"] = hostname
+    new_domain["certificateId"] = cert_id
+    new_custom_domains.append(new_domain)
+
+    try:
+        r = _patch_new_custom_domain(cmd, resource_group_name, name, new_custom_domains)
+        return r
+    except Exception as e:
+        handle_raw_exception(e)
+
+
+def list_hostname(cmd, resource_group_name, name, location=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    custom_domains = _get_custom_domains(cmd, resource_group_name, name, location)
+    return custom_domains
+
+
+def delete_hostname(cmd, resource_group_name, name, hostname, location=None):
+    _validate_subscription_registered(cmd, "Microsoft.App")
+
+    custom_domains = _get_custom_domains(cmd, resource_group_name, name, location)
+    new_custom_domains = list(filter(lambda c: c["name"] != hostname, custom_domains))
+
+    try:
+        r = _patch_new_custom_domain(cmd, resource_group_name, name, new_custom_domains)
+        logger.warning('Successfully deleted custom domain: {}'.format(hostname))
+        return r
+    except Exception as e:
+        handle_raw_exception(e)
+
+
+def is_hostname_validated(cmd, resource_group_name, name, hostname):
+    passed = False
+    message = None
+    try:
+        r = ContainerAppClient.validate_domain(cmd, resource_group_name, name, hostname)
+        passed = r["customDomainVerificationTest"] == "Passed" and not r["hasConflictOnManagedEnvironment"]
+        if "customDomainVerificationFailureInfo" in r:
+            message = r["customDomainVerificationFailureInfo"]["message"]
+        elif r["hasConflictOnManagedEnvironment"] and ("conflictingContainerAppResourceId" in r):
+            message = "Custom Domain {} Conflicts on the same environment with {}.".format(hostname, r["conflictingContainerAppResourceId"])
+        return passed, message
+    except Exception as e:
+        handle_raw_exception(e)

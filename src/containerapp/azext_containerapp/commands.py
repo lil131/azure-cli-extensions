@@ -121,3 +121,11 @@ def load_command_table(self, _):
     with self.command_group('containerapp dapr') as g:
         g.custom_command('enable', 'enable_dapr', exception_handler=ex_handler_factory())
         g.custom_command('disable', 'disable_dapr', exception_handler=ex_handler_factory())
+
+    with self.command_group('containerapp ssl') as g:
+        g.custom_command('upload', 'upload_ssl', exception_handler=ex_handler_factory())
+
+    with self.command_group('containerapp hostname') as g:
+        g.custom_command('bind', 'bind_hostname', exception_handler=ex_handler_factory())
+        g.custom_command('list', 'list_hostname', exception_handler=ex_handler_factory())
+        g.custom_command('delete', 'delete_hostname', confirmation=True, exception_handler=ex_handler_factory())

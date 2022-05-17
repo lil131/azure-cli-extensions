@@ -152,7 +152,7 @@ class ContainerappEnvScenarioTest(ScenarioTest):
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
         ])
         
-        self.cmd('containerapp env certificate list -n {} -g {} -t {}'.format(env_name, resource_group, cert_thumbprint), checks=[
+        self.cmd('containerapp env certificate list -n {} -g {} --thumbprint {}'.format(env_name, resource_group, cert_thumbprint), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', cert_name),
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),

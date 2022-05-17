@@ -18,7 +18,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/clitest.rg000001?api-version=2021-04-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001","name":"clitest.rg000001","type":"Microsoft.Resources/resourceGroups","location":"northeurope","tags":{"product":"azurecli","cause":"automation","date":"2022-05-13T20:15:55Z"},"properties":{"provisioningState":"Succeeded"}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001","name":"clitest.rg000001","type":"Microsoft.Resources/resourceGroups","location":"northeurope","tags":{"product":"azurecli","cause":"automation","date":"2022-05-17T06:38:25Z"},"properties":{"provisioningState":"Succeeded"}}'
     headers:
       cache-control:
       - no-cache
@@ -27,7 +27,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:15:58 GMT
+      - Tue, 17 May 2022 06:38:26 GMT
       expires:
       - '-1'
       pragma:
@@ -65,7 +65,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003?api-version=2021-12-01-preview
   response:
     body:
-      string: '{"properties":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87","provisioningState":"Creating","sku":{"name":"PerGB2018","lastSkuUpdate":"2022-05-13T20:16:02.6522367Z"},"retentionInDays":30,"features":{"legacy":0,"searchVersion":1,"enableLogAccessUsingOnlyResourcePermissions":true},"workspaceCapping":{"dailyQuotaGb":-1.0,"quotaNextResetTime":"2022-05-14T15:00:00Z","dataIngestionStatus":"RespectQuota"},"publicNetworkAccessForIngestion":"Enabled","publicNetworkAccessForQuery":"Enabled","createdDate":"2022-05-13T20:16:02.6522367Z","modifiedDate":"2022-05-13T20:16:02.6522367Z"},"location":"northeurope","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003","name":"containerapp-env000003","type":"Microsoft.OperationalInsights/workspaces"}'
+      string: '{"properties":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf","provisioningState":"Creating","sku":{"name":"PerGB2018","lastSkuUpdate":"2022-05-17T06:38:31.6125283Z"},"retentionInDays":30,"features":{"legacy":0,"searchVersion":1,"enableLogAccessUsingOnlyResourcePermissions":true},"workspaceCapping":{"dailyQuotaGb":-1.0,"quotaNextResetTime":"2022-05-17T19:00:00Z","dataIngestionStatus":"RespectQuota"},"publicNetworkAccessForIngestion":"Enabled","publicNetworkAccessForQuery":"Enabled","createdDate":"2022-05-17T06:38:31.6125283Z","modifiedDate":"2022-05-17T06:38:31.6125283Z"},"location":"northeurope","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003","name":"containerapp-env000003","type":"Microsoft.OperationalInsights/workspaces"}'
     headers:
       access-control-allow-origin:
       - '*'
@@ -78,7 +78,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:03 GMT
+      - Tue, 17 May 2022 06:38:32 GMT
       expires:
       - '-1'
       location:
@@ -119,7 +119,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003?api-version=2021-12-01-preview
   response:
     body:
-      string: '{"properties":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87","provisioningState":"Succeeded","sku":{"name":"PerGB2018","lastSkuUpdate":"2022-05-13T20:16:02.6522367Z"},"retentionInDays":30,"features":{"legacy":0,"searchVersion":1,"enableLogAccessUsingOnlyResourcePermissions":true},"workspaceCapping":{"dailyQuotaGb":-1.0,"quotaNextResetTime":"2022-05-14T15:00:00Z","dataIngestionStatus":"RespectQuota"},"publicNetworkAccessForIngestion":"Enabled","publicNetworkAccessForQuery":"Enabled","createdDate":"2022-05-13T20:16:02.6522367Z","modifiedDate":"2022-05-13T20:16:02.6522367Z"},"location":"northeurope","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003","name":"containerapp-env000003","type":"Microsoft.OperationalInsights/workspaces"}'
+      string: '{"properties":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf","provisioningState":"Succeeded","sku":{"name":"PerGB2018","lastSkuUpdate":"2022-05-17T06:38:31.6125283Z"},"retentionInDays":30,"features":{"legacy":0,"searchVersion":1,"enableLogAccessUsingOnlyResourcePermissions":true},"workspaceCapping":{"dailyQuotaGb":-1.0,"quotaNextResetTime":"2022-05-17T19:00:00Z","dataIngestionStatus":"RespectQuota"},"publicNetworkAccessForIngestion":"Enabled","publicNetworkAccessForQuery":"Enabled","createdDate":"2022-05-17T06:38:31.6125283Z","modifiedDate":"2022-05-17T06:38:31.6125283Z"},"location":"northeurope","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003","name":"containerapp-env000003","type":"Microsoft.OperationalInsights/workspaces"}'
     headers:
       access-control-allow-origin:
       - '*'
@@ -132,7 +132,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:33 GMT
+      - Tue, 17 May 2022 06:39:03 GMT
       expires:
       - '-1'
       pragma:
@@ -175,7 +175,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/clitest.rg000001/providers/Microsoft.OperationalInsights/workspaces/containerapp-env000003/sharedKeys?api-version=2020-08-01
   response:
     body:
-      string: '{"primarySharedKey":"cZ+EnLJULjtDqItdSSXG/87ToATMAJv+u/c5kZIbLpF20Ifr6fBd5pICpMVTcH5GXDW9IfHPfwdPZcakJipBtQ==","secondarySharedKey":"AzQowha2fN5Q8jPRqAoP8YNetqhGELxw1UZmaTKeuikvES33YWFVw5J0uPDbDfXNSKJU1TY+GlIwJsTOW1x6yQ=="}'
+      string: '{"primarySharedKey":"dPxXNO+i84TpjR8LVY9EGnxur6fQYzEMlqlNj/ky1BDZc9J+2EBGIL/TzCCm4I6tUtsOUqw2dwFOENFhcJKz3g==","secondarySharedKey":"NNQTevNqzXKKVkjP3EwqfAWfPytvKkxIgvPZ/KQuAcpBi6d7QLCW3UqSyg0IcZHXY+WmRbzxGfhKNHnkyyiTGA=="}'
     headers:
       access-control-allow-origin:
       - '*'
@@ -188,7 +188,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:35 GMT
+      - Tue, 17 May 2022 06:39:04 GMT
       expires:
       - '-1'
       pragma:
@@ -231,7 +231,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/clitest.rg000001?api-version=2021-04-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001","name":"clitest.rg000001","type":"Microsoft.Resources/resourceGroups","location":"northeurope","tags":{"product":"azurecli","cause":"automation","date":"2022-05-13T20:15:55Z"},"properties":{"provisioningState":"Succeeded"}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001","name":"clitest.rg000001","type":"Microsoft.Resources/resourceGroups","location":"northeurope","tags":{"product":"azurecli","cause":"automation","date":"2022-05-17T06:38:25Z"},"properties":{"provisioningState":"Succeeded"}}'
     headers:
       cache-control:
       - no-cache
@@ -240,7 +240,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:37 GMT
+      - Tue, 17 May 2022 06:39:05 GMT
       expires:
       - '-1'
       pragma:
@@ -302,7 +302,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:37 GMT
+      - Tue, 17 May 2022 06:39:05 GMT
       expires:
       - '-1'
       pragma:
@@ -364,7 +364,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:37 GMT
+      - Tue, 17 May 2022 06:39:05 GMT
       expires:
       - '-1'
       pragma:
@@ -382,7 +382,7 @@ interactions:
     body: '{"location": "northeurope", "tags": null, "properties": {"daprAIInstrumentationKey":
       null, "vnetConfiguration": null, "internalLoadBalancerEnabled": false, "appLogsConfiguration":
       {"destination": "log-analytics", "logAnalyticsConfiguration": {"customerId":
-      "9cfff478-da19-4463-8d28-e4088826ae87", "sharedKey": "cZ+EnLJULjtDqItdSSXG/87ToATMAJv+u/c5kZIbLpF20Ifr6fBd5pICpMVTcH5GXDW9IfHPfwdPZcakJipBtQ=="}}}}'
+      "020bf6de-2db3-49f2-abd2-c9bc54bb6fdf", "sharedKey": "dPxXNO+i84TpjR8LVY9EGnxur6fQYzEMlqlNj/ky1BDZc9J+2EBGIL/TzCCm4I6tUtsOUqw2dwFOENFhcJKz3g=="}}}}'
     headers:
       Accept:
       - '*/*'
@@ -404,20 +404,20 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976Z","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976Z"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384Z","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384Z"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       azure-asyncoperation:
-      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.App/locations/northeurope/managedEnvironmentOperationStatuses/4de2f58a-beb4-4fab-95ad-d4eb24c2e58f?api-version=2022-01-01-preview&azureAsyncOperation=true
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.App/locations/northeurope/managedEnvironmentOperationStatuses/aaa28402-04a3-4894-afaa-d21fca9250b2?api-version=2022-01-01-preview&azureAsyncOperation=true
       cache-control:
       - no-cache
       content-length:
-      - '785'
+      - '781'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:42 GMT
+      - Tue, 17 May 2022 06:39:09 GMT
       expires:
       - '-1'
       pragma:
@@ -456,18 +456,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:44 GMT
+      - Tue, 17 May 2022 06:39:11 GMT
       expires:
       - '-1'
       pragma:
@@ -506,18 +506,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:48 GMT
+      - Tue, 17 May 2022 06:39:14 GMT
       expires:
       - '-1'
       pragma:
@@ -556,18 +556,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:51 GMT
+      - Tue, 17 May 2022 06:39:17 GMT
       expires:
       - '-1'
       pragma:
@@ -606,18 +606,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:54 GMT
+      - Tue, 17 May 2022 06:39:21 GMT
       expires:
       - '-1'
       pragma:
@@ -656,18 +656,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:16:58 GMT
+      - Tue, 17 May 2022 06:39:24 GMT
       expires:
       - '-1'
       pragma:
@@ -706,18 +706,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:01 GMT
+      - Tue, 17 May 2022 06:39:27 GMT
       expires:
       - '-1'
       pragma:
@@ -756,18 +756,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:04 GMT
+      - Tue, 17 May 2022 06:39:31 GMT
       expires:
       - '-1'
       pragma:
@@ -806,18 +806,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:07 GMT
+      - Tue, 17 May 2022 06:39:35 GMT
       expires:
       - '-1'
       pragma:
@@ -856,18 +856,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Waiting","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '779'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:10 GMT
+      - Tue, 17 May 2022 06:39:38 GMT
       expires:
       - '-1'
       pragma:
@@ -906,68 +906,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Waiting","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Succeeded","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '783'
+      - '781'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:13 GMT
-      expires:
-      - '-1'
-      pragma:
-      - no-cache
-      server:
-      - Microsoft-IIS/10.0
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding,Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-powered-by:
-      - ASP.NET
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      CommandName:
-      - containerapp env create
-      Connection:
-      - keep-alive
-      ParameterSetName:
-      - -g -n --logs-workspace-id --logs-workspace-key
-      User-Agent:
-      - python/3.10.0 (Windows-10-10.0.22000-SP0) AZURECLI/2.36.0
-    method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
-  response:
-    body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Succeeded","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
-    headers:
-      api-supported-versions:
-      - 2022-01-01-preview, 2022-03-01
-      cache-control:
-      - no-cache
-      content-length:
-      - '785'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 13 May 2022 20:17:15 GMT
+      - Tue, 17 May 2022 06:39:41 GMT
       expires:
       - '-1'
       pragma:
@@ -1035,7 +985,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:16 GMT
+      - Tue, 17 May 2022 06:39:43 GMT
       expires:
       - '-1'
       pragma:
@@ -1068,18 +1018,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Succeeded","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Succeeded","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '785'
+      - '781'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:17 GMT
+      - Tue, 17 May 2022 06:39:43 GMT
       expires:
       - '-1'
       pragma:
@@ -1147,7 +1097,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:18 GMT
+      - Tue, 17 May 2022 06:39:44 GMT
       expires:
       - '-1'
       pragma:
@@ -1191,7 +1141,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:20 GMT
+      - Tue, 17 May 2022 06:39:45 GMT
       expires:
       - '-1'
       pragma:
@@ -1259,7 +1209,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:21 GMT
+      - Tue, 17 May 2022 06:39:45 GMT
       expires:
       - '-1'
       pragma:
@@ -1274,7 +1224,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"name": "containerapp-e-clitest.rghypw-6c9e-3922", "type": "Microsoft.App/managedEnvironments/certificates"}'
+    body: '{"name": "containerapp-e-clitest.rgd3wn-6c9e-6666", "type": "Microsoft.App/managedEnvironments/certificates"}'
     headers:
       Accept:
       - '*/*'
@@ -1305,7 +1255,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:22 GMT
+      - Tue, 17 May 2022 06:39:47 GMT
       expires:
       - '-1'
       pragma:
@@ -1346,18 +1296,18 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002?api-version=2022-01-01-preview
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:16:41.8583976","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:16:41.8583976"},"properties":{"provisioningState":"Succeeded","defaultDomain":"graypebble-2dabb39f.northeurope.azurecontainerapps.io","staticIp":"20.123.106.171","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"9cfff478-da19-4463-8d28-e4088826ae87"}}}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002","name":"containerapp-e2e-env000002","type":"Microsoft.App/managedEnvironments","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:09.336384","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:09.336384"},"properties":{"provisioningState":"Succeeded","defaultDomain":"purpledune-f0d3ee71.northeurope.azurecontainerapps.io","staticIp":"20.82.213.36","appLogsConfiguration":{"destination":"log-analytics","logAnalyticsConfiguration":{"customerId":"020bf6de-2db3-49f2-abd2-c9bc54bb6fdf"}}}}'
     headers:
       api-supported-versions:
       - 2022-01-01-preview, 2022-03-01
       cache-control:
       - no-cache
       content-length:
-      - '785'
+      - '781'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:24 GMT
+      - Tue, 17 May 2022 06:39:48 GMT
       expires:
       - '-1'
       pragma:
@@ -1398,10 +1348,10 @@ interactions:
       User-Agent:
       - python/3.10.0 (Windows-10-10.0.22000-SP0) AZURECLI/2.36.0
     method: PUT
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922?api-version=2022-03-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666?api-version=2022-03-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922","name":"containerapp-e-clitest.rghypw-6c9e-3922","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:17:26.8088866Z","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:17:26.8088866Z"},"properties":{"subjectName":"CN=antdomaincerttest.com,
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666","name":"containerapp-e-clitest.rgd3wn-6c9e-6666","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:52.7596075Z","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:52.7596075Z"},"properties":{"subjectName":"CN=antdomaincerttest.com,
         O=MS, L=Redmond, S=WA, C=US","issuer":"CN=antdomaincerttest.com, O=MS, L=Redmond,
         S=WA, C=US","issueDate":"2022-04-25T04:52:01Z","expirationDate":"2023-04-20T04:52:01Z","thumbprint":"6C9E3B69C4C0D50DC735D6027D075A6C500AEF63","valid":true,"publicKeyHash":"tSjSz8qDokLoM36Z0X6+IrieDtcOvJUElMeyqfPQa2E=","provisioningState":"Succeeded"}}'
     headers:
@@ -1414,7 +1364,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:27 GMT
+      - Tue, 17 May 2022 06:39:53 GMT
       expires:
       - '-1'
       pragma:
@@ -1484,7 +1434,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:27 GMT
+      - Tue, 17 May 2022 06:39:54 GMT
       expires:
       - '-1'
       pragma:
@@ -1517,7 +1467,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates?api-version=2022-03-01
   response:
     body:
-      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922","name":"containerapp-e-clitest.rghypw-6c9e-3922","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:17:26.8088866","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:17:26.8088866"},"properties":{"subjectName":"CN=antdomaincerttest.com,
+      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666","name":"containerapp-e-clitest.rgd3wn-6c9e-6666","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:52.7596075","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:52.7596075"},"properties":{"subjectName":"CN=antdomaincerttest.com,
         O=MS, L=Redmond, S=WA, C=US","issuer":"CN=antdomaincerttest.com, O=MS, L=Redmond,
         S=WA, C=US","issueDate":"2022-04-25T04:52:01","expirationDate":"2023-04-20T04:52:01","thumbprint":"6C9E3B69C4C0D50DC735D6027D075A6C500AEF63","valid":true,"publicKeyHash":"tSjSz8qDokLoM36Z0X6+IrieDtcOvJUElMeyqfPQa2E=","provisioningState":"Succeeded"}}]}'
     headers:
@@ -1530,7 +1480,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:29 GMT
+      - Tue, 17 May 2022 06:39:55 GMT
       expires:
       - '-1'
       pragma:
@@ -1598,7 +1548,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:29 GMT
+      - Tue, 17 May 2022 06:39:55 GMT
       expires:
       - '-1'
       pragma:
@@ -1628,10 +1578,10 @@ interactions:
       User-Agent:
       - python/3.10.0 (Windows-10-10.0.22000-SP0) AZURECLI/2.36.0
     method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922?api-version=2022-03-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666?api-version=2022-03-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922","name":"containerapp-e-clitest.rghypw-6c9e-3922","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:17:26.8088866","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:17:26.8088866"},"properties":{"subjectName":"CN=antdomaincerttest.com,
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666","name":"containerapp-e-clitest.rgd3wn-6c9e-6666","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:52.7596075","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:52.7596075"},"properties":{"subjectName":"CN=antdomaincerttest.com,
         O=MS, L=Redmond, S=WA, C=US","issuer":"CN=antdomaincerttest.com, O=MS, L=Redmond,
         S=WA, C=US","issueDate":"2022-04-25T04:52:01","expirationDate":"2023-04-20T04:52:01","thumbprint":"6C9E3B69C4C0D50DC735D6027D075A6C500AEF63","valid":true,"publicKeyHash":"tSjSz8qDokLoM36Z0X6+IrieDtcOvJUElMeyqfPQa2E=","provisioningState":"Succeeded"}}'
     headers:
@@ -1644,7 +1594,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:31 GMT
+      - Tue, 17 May 2022 06:39:57 GMT
       expires:
       - '-1'
       pragma:
@@ -1676,7 +1626,7 @@ interactions:
       Connection:
       - keep-alive
       ParameterSetName:
-      - -n -g -t
+      - -n -g --thumbprint
       User-Agent:
       - AZURECLI/2.36.0 azsdk-python-azure-mgmt-resource/21.1.0b1 Python/3.10.0 (Windows-10-10.0.22000-SP0)
     method: GET
@@ -1712,7 +1662,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:32 GMT
+      - Tue, 17 May 2022 06:39:58 GMT
       expires:
       - '-1'
       pragma:
@@ -1738,14 +1688,14 @@ interactions:
       Connection:
       - keep-alive
       ParameterSetName:
-      - -n -g -t
+      - -n -g --thumbprint
       User-Agent:
       - python/3.10.0 (Windows-10-10.0.22000-SP0) AZURECLI/2.36.0
     method: GET
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates?api-version=2022-03-01
   response:
     body:
-      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922","name":"containerapp-e-clitest.rghypw-6c9e-3922","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:17:26.8088866","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:17:26.8088866"},"properties":{"subjectName":"CN=antdomaincerttest.com,
+      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666","name":"containerapp-e-clitest.rgd3wn-6c9e-6666","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:52.7596075","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:52.7596075"},"properties":{"subjectName":"CN=antdomaincerttest.com,
         O=MS, L=Redmond, S=WA, C=US","issuer":"CN=antdomaincerttest.com, O=MS, L=Redmond,
         S=WA, C=US","issueDate":"2022-04-25T04:52:01","expirationDate":"2023-04-20T04:52:01","thumbprint":"6C9E3B69C4C0D50DC735D6027D075A6C500AEF63","valid":true,"publicKeyHash":"tSjSz8qDokLoM36Z0X6+IrieDtcOvJUElMeyqfPQa2E=","provisioningState":"Succeeded"}}]}'
     headers:
@@ -1758,7 +1708,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:33 GMT
+      - Tue, 17 May 2022 06:39:59 GMT
       expires:
       - '-1'
       pragma:
@@ -1826,7 +1776,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:33 GMT
+      - Tue, 17 May 2022 06:39:59 GMT
       expires:
       - '-1'
       pragma:
@@ -1888,7 +1838,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:34 GMT
+      - Tue, 17 May 2022 06:40:00 GMT
       expires:
       - '-1'
       pragma:
@@ -1921,7 +1871,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates?api-version=2022-03-01
   response:
     body:
-      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922","name":"containerapp-e-clitest.rghypw-6c9e-3922","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-13T20:17:26.8088866","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-13T20:17:26.8088866"},"properties":{"subjectName":"CN=antdomaincerttest.com,
+      string: '{"value":[{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666","name":"containerapp-e-clitest.rgd3wn-6c9e-6666","type":"Microsoft.App/managedEnvironments/certificates","location":"northeurope","systemData":{"createdBy":"linluliu@microsoft.com","createdByType":"User","createdAt":"2022-05-17T06:39:52.7596075","lastModifiedBy":"linluliu@microsoft.com","lastModifiedByType":"User","lastModifiedAt":"2022-05-17T06:39:52.7596075"},"properties":{"subjectName":"CN=antdomaincerttest.com,
         O=MS, L=Redmond, S=WA, C=US","issuer":"CN=antdomaincerttest.com, O=MS, L=Redmond,
         S=WA, C=US","issueDate":"2022-04-25T04:52:01","expirationDate":"2023-04-20T04:52:01","thumbprint":"6C9E3B69C4C0D50DC735D6027D075A6C500AEF63","valid":true,"publicKeyHash":"tSjSz8qDokLoM36Z0X6+IrieDtcOvJUElMeyqfPQa2E=","provisioningState":"Succeeded"}}]}'
     headers:
@@ -1934,7 +1884,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:34 GMT
+      - Tue, 17 May 2022 06:40:01 GMT
       expires:
       - '-1'
       pragma:
@@ -1972,7 +1922,7 @@ interactions:
       User-Agent:
       - python/3.10.0 (Windows-10-10.0.22000-SP0) AZURECLI/2.36.0
     method: DELETE
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rghypw-6c9e-3922?api-version=2022-03-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/clitest.rg000001/providers/Microsoft.App/managedEnvironments/containerapp-e2e-env000002/certificates/containerapp-e-clitest.rgd3wn-6c9e-6666?api-version=2022-03-01
   response:
     body:
       string: ''
@@ -1984,7 +1934,7 @@ interactions:
       content-length:
       - '0'
       date:
-      - Fri, 13 May 2022 20:17:39 GMT
+      - Tue, 17 May 2022 06:40:04 GMT
       expires:
       - '-1'
       pragma:
@@ -2050,7 +2000,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:39 GMT
+      - Tue, 17 May 2022 06:40:04 GMT
       expires:
       - '-1'
       pragma:
@@ -2094,7 +2044,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 13 May 2022 20:17:41 GMT
+      - Tue, 17 May 2022 06:40:06 GMT
       expires:
       - '-1'
       pragma:

@@ -356,6 +356,39 @@ helps['containerapp env dapr-component remove'] = """
           az containerapp env dapr-component remove -g MyResourceGroup --dapr-component-name MyDaprComponentName --name MyEnvironment
 """
 
+# Certificates Commands
+helps['containerapp env certificate'] = """
+    type: group
+    short-summary: Commands to manage certificates for the Container Apps environment.
+"""
+
+helps['containerapp env certificate list'] = """
+    type: command
+    short-summary: List certificates for an environment.
+    examples:
+    - name: List certificates for an environment.
+      text: |
+          az containerapp env certificate list -g MyResourceGroup --name MyEnvironment
+"""
+
+helps['containerapp env certificate upload'] = """
+    type: command
+    short-summary: Add or update a certificate.
+    examples:
+    - name: Add or update a certificate.
+      text: |
+          az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment -file MyFilepath
+"""
+
+helps['containerapp env certificate delete'] = """
+    type: command
+    short-summary: Delete a certificate from the Container Apps environment.
+    examples:
+    - name: Delete a certificate from the Container Apps environment.
+      text: |
+          az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate-name MyCertificate
+"""
+
 # Identity Commands
 helps['containerapp identity'] = """
     type: group
@@ -639,4 +672,33 @@ helps['containerapp dapr disable'] = """
     - name: Disable Dapr for a container app.
       text: |
           az containerapp dapr disable -n MyContainerapp -g MyResourceGroup
+"""
+
+# custom domain Commands
+helps['containerapp ssl upload'] = """
+    type: command
+    short-summary: Upload certificate to a managed environment, add hostname to an app in that environment, and bind the certificate to the hostname
+"""
+
+helps['containerapp hostname'] = """
+    type: group
+    short-summary: Commands to manage hostnames of a container app.
+"""
+
+helps['containerapp hostname delete'] = """
+    type: command
+    short-summary: Delete hostnames from a container app.
+    examples:
+    - name: Delete secrets from a container app.
+      text: |
+          az containerapp hostname delete -n MyContainerapp -g MyResourceGroup --hostname MyHostname
+"""
+
+helps['containerapp hostname list'] = """
+    type: command
+    short-summary: List the hostnames of a container app.
+    examples:
+    - name: List the hostnames of a container app.
+      text: |
+          az containerapp hostname list -n MyContainerapp -g MyResourceGroup
 """

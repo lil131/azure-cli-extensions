@@ -239,3 +239,19 @@ AzureCredentials = {
     "tenantId": None,  # str
     "subscriptionId": None  # str
 }
+
+ContainerAppCustomDomainEnvelope = {
+    "properties": {
+        "configuration": {
+            "ingress": {
+                "customDomains": None
+            }
+        }
+    }
+}
+
+ContainerAppCustomDomain = {
+    "name": None,
+    "bindingType": "SniEnabled",
+    "certificateId": None
+}

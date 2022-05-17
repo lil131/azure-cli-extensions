@@ -261,3 +261,55 @@ class ContainerappIngressTests(ScenarioTest):
 
         for revision in revisions_list:
             self.assertEqual(revision["properties"]["trafficWeight"], 50)
+
+    @AllowLargeResponse(8192)
+    @ResourceGroupPreparer(location="westeurope")
+    def test_containerapp_custom_domains_e2e(self, resource_group):
+        env_name = self.create_random_name(prefix='containerapp-env', length=24)
+        ca_name = self.create_random_name(prefix='containerapp', length=24)
+        logs_workspace_name = self.create_random_name(prefix='containerapp-env', length=24)
+
+        logs_workspace_id = self.cmd('monitor log-analytics workspace create -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["customerId"]
+        logs_workspace_key = self.cmd('monitor log-analytics workspace get-shared-keys -g {} -n {}'.format(resource_group, logs_workspace_name)).get_output_in_json()["primarySharedKey"]
+
+        self.cmd('containerapp env create -g {} -n {} --logs-workspace-id {} --logs-workspace-key {}'.format(resource_group, env_name, logs_workspace_id, logs_workspace_key))
+
+        containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        while containerapp_env["properties"]["provisioningState"].lower() == "waiting":
+            time.sleep(5)
+            containerapp_env = self.cmd('containerapp env show -g {} -n {}'.format(resource_group, env_name)).get_output_in_json()
+
+        self.cmd('containerapp create -g {} -n {} --environment {} --ingress external --target-port 80'.format(resource_group, ca_name, env_name))
+
+        self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
+            JMESPathCheck('length(@)', 0),
+        ])
+
+        pfx_file = os.path.join(TEST_DIR, 'cert.pfx')
+        cert_password = 'test12'
+        hostname_1 = 'cli.antdomaincerttest.com'
+        hostname_2 = 'testing.antdomaincerttest.com'
+        self.cmd('containerapp ssl upload -n {} -g {} -env {} --hostname {} -file "{}" -p {}'.format(ca_name, resource_group, env_name, hostname_1, pfx_file, cert_password), checks=[
+            JMESPathCheck('properties.configuration.ingress.customDomains[0].name', hostname_1),
+        ])
+
+        cert_id = self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', hostname_1),
+        ]).get_output_in_json()[0]["certificateId"]
+
+        self.cmd('containerapp hostname bind -g {} -n {} --hostname {} -cert {}'.format(resource_group, ca_name, hostname_2, cert_id), checks=[
+            JMESPathCheck('length(properties.configuration.ingress.customDomains)', 2),
+            JMESPathCheck('properties.configuration.ingress.customDomains[0].certificateId', cert_id),
+            JMESPathCheck('properties.configuration.ingress.customDomains[1].certificateId', cert_id),
+        ]).get_output_in_json()
+        
+        self.cmd('containerapp hostname delete -g {} -n {} --hostname {} --yes'.format(resource_group, ca_name, hostname_1), checks=[
+            JMESPathCheck('length(properties.configuration.ingress.customDomains)', 1)
+        ]).get_output_in_json()
+
+        self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', hostname_2),
+        ])
