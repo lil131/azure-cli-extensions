@@ -444,7 +444,7 @@ helps['containerapp env certificate upload'] = """
     examples:
     - name: Add or update a certificate.
       text: |
-          az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment -file MyFilepath
+          az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment --certificate-file MyFilepath
 """
 
 helps['containerapp env certificate delete'] = """
@@ -748,6 +748,11 @@ helps['containerapp dapr disable'] = """
 """
 
 # custom domain Commands
+helps['containerapp ssl'] = """
+    type: group
+    short-summary: Upload certificate to a managed environment, add hostname to an app in that environment, and bind the certificate to the hostname
+"""
+
 helps['containerapp ssl upload'] = """
     type: command
     short-summary: Upload certificate to a managed environment, add hostname to an app in that environment, and bind the certificate to the hostname
@@ -756,6 +761,15 @@ helps['containerapp ssl upload'] = """
 helps['containerapp hostname'] = """
     type: group
     short-summary: Commands to manage hostnames of a container app.
+"""
+
+helps['containerapp hostname bind'] = """
+    type: command
+    short-summary: Add or update the hostname and binding with an existing certificate.
+    examples:
+    - name: Add or update hostname and binding.
+      text: |
+          az containerapp hostname bind -n MyContainerapp -g MyResourceGroup --hostname MyHostname --certificate MyCertificateId
 """
 
 helps['containerapp hostname delete'] = """

@@ -137,5 +137,5 @@ def load_command_table(self, _):
 
     with self.command_group('containerapp hostname') as g:
         g.custom_command('bind', 'bind_hostname', exception_handler=ex_handler_factory())
-        g.custom_command('list', 'list_hostname', exception_handler=ex_handler_factory())
+        g.custom_command('list', 'list_hostname')
         g.custom_command('delete', 'delete_hostname', confirmation=True, exception_handler=ex_handler_factory())

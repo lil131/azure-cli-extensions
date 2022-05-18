@@ -10,7 +10,6 @@ import unittest
 from azure.cli.testsdk.scenario_tests import AllowLargeResponse, live_only
 from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer, JMESPathCheck)
 
-
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 class ContainerappIdentityTests(ScenarioTest):
@@ -290,28 +289,34 @@ class ContainerappIngressTests(ScenarioTest):
         cert_password = 'test12'
         hostname_1 = 'cli.antdomaincerttest.com'
         hostname_2 = 'testing.antdomaincerttest.com'
-        self.cmd('containerapp ssl upload -n {} -g {} -env {} --hostname {} -file "{}" -p {}'.format(ca_name, resource_group, env_name, hostname_1, pfx_file, cert_password), checks=[
+        self.cmd('containerapp ssl upload -n {} -g {} --environment {} --hostname {} --certificate-file "{}" --password {}'.format(ca_name, resource_group, env_name, hostname_1, pfx_file, cert_password), checks=[
             JMESPathCheck('properties.configuration.ingress.customDomains[0].name', hostname_1),
         ])
 
         cert_id = self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', hostname_1),
+            JMESPathCheck('[0].bindingType', "SniEnabled"),
         ]).get_output_in_json()[0]["certificateId"]
 
-        self.cmd('containerapp hostname bind -g {} -n {} --hostname {} -cert {}'.format(resource_group, ca_name, hostname_2, cert_id), checks=[
+        self.cmd('containerapp hostname bind -g {} -n {} --hostname {} --certificate {}'.format(resource_group, ca_name, hostname_2, cert_id), checks=[
             JMESPathCheck('length(properties.configuration.ingress.customDomains)', 2),
             JMESPathCheck('properties.configuration.ingress.customDomains[0].certificateId', cert_id),
             JMESPathCheck('properties.configuration.ingress.customDomains[1].certificateId', cert_id),
         ]).get_output_in_json()
         
         self.cmd('containerapp hostname delete -g {} -n {} --hostname {} --yes'.format(resource_group, ca_name, hostname_1), checks=[
-            JMESPathCheck('length(properties.configuration.ingress.customDomains)', 1)
+            JMESPathCheck('length(properties.configuration.ingress.customDomains)', 1),
+            JMESPathCheck('properties.configuration.ingress.customDomains[0].name', hostname_2),
+            JMESPathCheck('properties.configuration.ingress.customDomains[0].bindingType', "SniEnabled"),
+            JMESPathCheck('properties.configuration.ingress.customDomains[0].certificateId', cert_id),
         ]).get_output_in_json()
 
         self.cmd('containerapp hostname list -g {} -n {}'.format(resource_group, ca_name), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', hostname_2),
+            JMESPathCheck('[0].bindingType', "SniEnabled"),
+            JMESPathCheck('[0].certificateId', cert_id),
         ])
 
 class ContainerappDaprTests(ScenarioTest):

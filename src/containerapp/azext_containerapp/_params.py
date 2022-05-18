@@ -150,17 +150,20 @@ def load_arguments(self, _):
         c.argument('name', name_type, help='Name of the Container Apps Environment.')
 
     with self.argument_context('containerapp env certificate upload') as c:
-        c.argument('certificate_file', options_list=['--certificate-file', '-file'], help='The filepath of the .pfx or .pem file')
-        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which should be unique within the Container Apps environment.')
+        c.argument('name', id_part=None)
+        c.argument('certificate_file', options_list=['--certificate-file', '-f'], help='The filepath of the .pfx or .pem file')
+        c.argument('certificate_name', options_list=['--certificate-name', '-c'], help='Name of the certificate which should be unique within the Container Apps environment.')
         c.argument('certificate_password', options_list=['--password', '-p'], help='The certificate file password')
 
     with self.argument_context('containerapp env certificate list') as c:
-        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which is unique within the Container Apps environment.')
-        c.argument('thumbprint', options_list=['--thumbprint', '-tp'], help='Thumbprint of the certificate.')
+        c.argument('name', id_part=None)
+        c.argument('certificate_name', options_list=['--certificate-name', '-c'], help='Name of the certificate which is unique within the Container Apps environment.')
+        c.argument('thumbprint', options_list=['--thumbprint', '-t'], help='Thumbprint of the certificate.')
 
     with self.argument_context('containerapp env certificate delete') as c:
-        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which is unique within the Container Apps environment.')
-        c.argument('thumbprint', options_list=['--thumbprint', '-tp'], help='Thumbprint of the certificate.')
+        c.argument('name', id_part=None)
+        c.argument('certificate_name', options_list=['--certificate-name', '-c'], help='Name of the certificate which is unique within the Container Apps environment.')
+        c.argument('thumbprint', options_list=['--thumbprint', '-t'], help='Thumbprint of the certificate.')
 
     with self.argument_context('containerapp env storage') as c:
         c.argument('name', id_part=None)
@@ -272,17 +275,23 @@ def load_arguments(self, _):
         c.argument('service_principal_tenant_id', help='The service principal tenant ID. Used by Github Actions to authenticate with Azure.', options_list=["--service-principal-tenant-id", "--sp-tid"])
 
     with self.argument_context('containerapp ssl upload') as c:
+        c.argument('name', id_part=None)
         c.argument('hostname', help='The custom domain name.')
-        c.argument('environment', options_list=['--environment', '-env'], help='Name or resource id of the Container App environment.')
-        c.argument('certificate_file', options_list=['--certificate-file', '-file'], help='The filepath of the .pfx or .pem file')
+        c.argument('environment', options_list=['--environment', '-e'], help='Name or resource id of the Container App environment.')
+        c.argument('certificate_file', options_list=['--certificate-file', '-f'], help='The filepath of the .pfx or .pem file')
         c.argument('certificate_password', options_list=['--password', '-p'], help='The certificate file password')
-        c.argument('certificate_name', options_list=['--certificate-name', '-cert'], help='Name of the certificate which should be unique within the Container Apps environment.')
+        c.argument('certificate_name', options_list=['--certificate-name', '-c'], help='Name of the certificate which should be unique within the Container Apps environment.')
 
     with self.argument_context('containerapp hostname bind') as c:
+        c.argument('name', id_part=None)
         c.argument('hostname', help='The custom domain name.')
-        c.argument('thumbprint', options_list=['--thumbprint', '-tp'], help='Thumbprint of the certificate.')
-        c.argument('certificate', options_list=['--certificate', '-cert'], help='Name or resource id of the certificate.')
-        c.argument('environment', options_list=['--environment', '-env'], help='Name or resource id of the Container App environment.')
+        c.argument('thumbprint', options_list=['--thumbprint', '-t'], help='Thumbprint of the certificate.')
+        c.argument('certificate', options_list=['--certificate', '-c'], help='Name or resource id of the certificate.')
+        c.argument('environment', options_list=['--environment', '-e'], help='Name or resource id of the Container App environment.')
+
+    with self.argument_context('containerapp hostname list') as c:
+        c.argument('name', id_part=None)
 
     with self.argument_context('containerapp hostname delete') as c:
+        c.argument('name', id_part=None)
         c.argument('hostname', help='The custom domain name.')

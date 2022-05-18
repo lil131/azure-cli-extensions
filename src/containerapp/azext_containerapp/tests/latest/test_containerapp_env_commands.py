@@ -135,7 +135,7 @@ class ContainerappEnvScenarioTest(ScenarioTest):
         pfx_file = os.path.join(TEST_DIR, 'cert.pfx')
         cert_password = 'test12'
         cert_thumbprint = '6C9E3B69C4C0D50DC735D6027D075A6C500AEF63'
-        cert_name = self.cmd('containerapp env certificate upload -g {} -n {} -file "{}" -p {}'.format(resource_group, env_name, pfx_file, cert_password), checks=[
+        cert_name = self.cmd('containerapp env certificate upload -g {} -n {} --certificate-file "{}" --password {}'.format(resource_group, env_name, pfx_file, cert_password), checks=[
             JMESPathCheck('properties.thumbprint', cert_thumbprint),
             JMESPathCheck('type', "Microsoft.App/managedEnvironments/certificates"),
         ]).get_output_in_json()['name']
@@ -146,7 +146,7 @@ class ContainerappEnvScenarioTest(ScenarioTest):
             JMESPathCheck('[0].name', cert_name),
         ])
         
-        self.cmd('containerapp env certificate list -n {} -g {} -cert {}'.format(env_name, resource_group, cert_name), checks=[
+        self.cmd('containerapp env certificate list -n {} -g {} --certificate-name {}'.format(env_name, resource_group, cert_name), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', cert_name),
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
