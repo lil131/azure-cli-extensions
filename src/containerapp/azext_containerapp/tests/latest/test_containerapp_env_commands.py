@@ -131,34 +131,77 @@ class ContainerappEnvScenarioTest(ScenarioTest):
         self.cmd('containerapp env certificate list -g {} -n {}'.format(resource_group, env_name), checks=[
             JMESPathCheck('length(@)', 0),
         ])
-        
-        pfx_file = os.path.join(TEST_DIR, 'cert.pfx')
-        cert_password = 'test12'
-        cert_thumbprint = '6C9E3B69C4C0D50DC735D6027D075A6C500AEF63'
-        cert_name = self.cmd('containerapp env certificate upload -g {} -n {} --certificate-file "{}" --password {}'.format(resource_group, env_name, pfx_file, cert_password), checks=[
-            JMESPathCheck('properties.thumbprint', cert_thumbprint),
+
+        # test that non pfx or pem files are not supported
+        txt_file = os.path.join(TEST_DIR, 'cert.txt')
+        from knack.util import CLIError
+        with self.assertRaises(CLIError):
+            self.cmd('containerapp env certificate upload -g {} -n {} --certificate-file "{}"'.format(resource_group, env_name, txt_file), checks=[
             JMESPathCheck('type', "Microsoft.App/managedEnvironments/certificates"),
-        ]).get_output_in_json()['name']
+        ])
+
+        # test pfx file with password
+        pfx_file = os.path.join(TEST_DIR, 'cert.pfx')
+        pfx_password = 'test12'
+        cert = self.cmd('containerapp env certificate upload -g {} -n {} --certificate-file "{}" --password {}'.format(resource_group, env_name, pfx_file, pfx_password), checks=[
+            JMESPathCheck('type', "Microsoft.App/managedEnvironments/certificates"),
+        ]).get_output_in_json()
+        
+        cert_name = cert["name"]
+        cert_id = cert["id"]
+        cert_thumbprint = cert["properties"]["thumbprint"]
 
         self.cmd('containerapp env certificate list -n {} -g {}'.format(env_name, resource_group), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
             JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].id', cert_id),
         ])
         
-        self.cmd('containerapp env certificate list -n {} -g {} --certificate-name {}'.format(env_name, resource_group, cert_name), checks=[
+        # test pem file without password
+        pem_file = os.path.join(TEST_DIR, 'cert.pem')
+        cert_2 = self.cmd('containerapp env certificate upload -g {} -n {} --certificate-file "{}"'.format(resource_group, env_name, pem_file), checks=[
+            JMESPathCheck('type', "Microsoft.App/managedEnvironments/certificates"),
+        ]).get_output_in_json()
+        cert_name_2 = cert_2["name"]
+        cert_id_2 = cert_2["id"]
+        cert_thumbprint_2 = cert_2["properties"]["thumbprint"]
+        
+        self.cmd('containerapp env certificate list -n {} -g {}'.format(env_name, resource_group), checks=[
+            JMESPathCheck('length(@)', 2),
+        ])
+        
+        self.cmd('containerapp env certificate list -n {} -g {} --certificate {}'.format(env_name, resource_group, cert_name), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].id', cert_id),
+            JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
+        ])
+        
+        self.cmd('containerapp env certificate list -n {} -g {} --certificate {}'.format(env_name, resource_group, cert_id), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].id', cert_id),
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
         ])
         
         self.cmd('containerapp env certificate list -n {} -g {} --thumbprint {}'.format(env_name, resource_group, cert_thumbprint), checks=[
             JMESPathCheck('length(@)', 1),
             JMESPathCheck('[0].name', cert_name),
+            JMESPathCheck('[0].id', cert_id),
             JMESPathCheck('[0].properties.thumbprint', cert_thumbprint),
         ])
         
         self.cmd('containerapp env certificate delete -n {} -g {} --thumbprint {} --yes'.format(env_name, resource_group, cert_thumbprint))
+        
+        self.cmd('containerapp env certificate list -n {} -g {} --certificate {}'.format(env_name, resource_group, cert_id_2), checks=[
+            JMESPathCheck('length(@)', 1),
+            JMESPathCheck('[0].name', cert_name_2),
+            JMESPathCheck('[0].id', cert_id_2),
+            JMESPathCheck('[0].properties.thumbprint', cert_thumbprint_2),
+        ])
+        
+        self.cmd('containerapp env certificate delete -n {} -g {} --certificate {} --yes'.format(env_name, resource_group, cert_name_2))
 
         self.cmd('containerapp env certificate list -g {} -n {}'.format(resource_group, env_name), checks=[
             JMESPathCheck('length(@)', 0),

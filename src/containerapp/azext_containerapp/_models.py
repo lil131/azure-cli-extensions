@@ -181,7 +181,7 @@ ContainerApp = {
     "tags": None
 }
 
-ContainerAppCertificate = {
+ContainerAppCertificateEnvelope = {
     "location": None,
     "properties": {
         "password": None,

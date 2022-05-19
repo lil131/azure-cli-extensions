@@ -1012,7 +1012,7 @@ def get_randomized_name(prefix, name=None, initial="rg"):
     return default
 
 
-def get_randomized_cert_name(thumbprint, prefix, initial="rg"):
+def generate_randomized_cert_name(thumbprint, prefix, initial="rg"):
     from random import randint
     cert_name = "{}-{}-{}-{:04}".format(prefix[:14], initial[:14], thumbprint[:4].lower(), randint(0, 9999))
     for c in cert_name:
@@ -1194,30 +1194,32 @@ def load_cert_file(file_path, cert_password=None):
     from OpenSSL import crypto
     import os
 
-    file_data = None
+    cert_data = None
     thumbprint = None
     blob = None
-    with open(file_path, "rb") as f:
-        if os.path.splitext(file_path)[1] in ['.pem']:
-            file_data = f.read()
-            x509 = crypto.load_certificate(crypto.FILETYPE_PEM, file_data)
-            digest_algorithm = 'sha1'
-            thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
-            blob = b64encode(file_data).decode("utf-8")
-        elif os.path.splitext(file_path)[1] in ['.pfx']:
-            file_data = f.read()
-            try:
-                p12 = crypto.load_pkcs12(file_data, cert_password)
-            except Exception as e:
-                raise FileOperationError('Failed to load the certificate file. This may be due to an incorrect or missing password. Please double check and try again.\nError: {}'.format(e)) from e
-            x509 = p12.get_certificate()
-            digest_algorithm = 'sha1'
-            thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
-            pem_data = crypto.dump_certificate(crypto.FILETYPE_PEM, x509)
-            blob = b64encode(pem_data).decode("utf-8")
-        else:
-            raise FileOperationError('Not a valid file type. Only .PFX and .PEM files are supported.')
-
+    try:
+        with open(file_path, "rb") as f:
+            if os.path.splitext(file_path)[1] in ['.pem']:
+                cert_data = f.read()
+                x509 = crypto.load_certificate(crypto.FILETYPE_PEM, cert_data)
+                digest_algorithm = 'sha256'
+                thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
+                blob = b64encode(cert_data).decode("utf-8")
+            elif os.path.splitext(file_path)[1] in ['.pfx']:
+                cert_data = f.read()
+                try:
+                    p12 = crypto.load_pkcs12(cert_data, cert_password)
+                except Exception as e:
+                    raise FileOperationError('Failed to load the certificate file. This may be due to an incorrect or missing password. Please double check and try again.\nError: {}'.format(e)) from e
+                x509 = p12.get_certificate()
+                digest_algorithm = 'sha256'
+                thumbprint = x509.digest(digest_algorithm).decode("utf-8").replace(':', '')
+                pem_data = crypto.dump_certificate(crypto.FILETYPE_PEM, x509)
+                blob = b64encode(pem_data).decode("utf-8")
+            else:
+                raise FileOperationError('Not a valid file type. Only .PFX and .PEM files are supported.')
+    except Exception as e:
+        raise CLIInternalError(e)
     return blob, thumbprint
 
 
@@ -1250,7 +1252,14 @@ def validate_hostname(cmd, resource_group_name, name, hostname):
 def patch_new_custom_domain(cmd, resource_group_name, name, new_custom_domains):
     envelope = ContainerAppCustomDomainEnvelopeModel
     envelope["properties"]["configuration"]["ingress"]["customDomains"] = new_custom_domains
-    return ContainerAppClient.update(cmd, resource_group_name, name, envelope)
+    try:
+        r = ContainerAppClient.update(cmd, resource_group_name, name, envelope)
+    except CLIError as e:
+        handle_raw_exception(e)
+    if "customDomains" in r["properties"]["configuration"]["ingress"]:
+        return list(r["properties"]["configuration"]["ingress"]["customDomains"])
+    else:
+        return []
 
 
 def get_custom_domains(cmd, resource_group_name, name, location=None, environment=None):

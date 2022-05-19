@@ -436,6 +436,15 @@ helps['containerapp env certificate list'] = """
     - name: List certificates for an environment.
       text: |
           az containerapp env certificate list -g MyResourceGroup --name MyEnvironment
+    - name: List certificates by certificate id.
+      text: |
+          az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --certificate MyCertificateId
+    - name: List certificates by certificate name.
+      text: |
+          az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --certificate MyCertificateName
+    - name: List certificates by certificate thumbprint.
+      text: |
+          az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --thumbprint MyCertificateThumbprint
 """
 
 helps['containerapp env certificate upload'] = """
@@ -445,15 +454,24 @@ helps['containerapp env certificate upload'] = """
     - name: Add or update a certificate.
       text: |
           az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment --certificate-file MyFilepath
+    - name: Add or update a certificate with a user-provided certificate name.
+      text: |
+          az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment --certificate-file MyFilepath --certificate-name MyCertificateName
 """
 
 helps['containerapp env certificate delete'] = """
     type: command
     short-summary: Delete a certificate from the Container Apps environment.
     examples:
-    - name: Delete a certificate from the Container Apps environment.
+    - name: Delete a certificate from the Container Apps environment by certificate name
       text: |
-          az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate-name MyCertificate
+          az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate MyCertificateName
+    - name: Delete a certificate from the Container Apps environment by certificate id
+      text: |
+          az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate MyCertificateId
+    - name: Delete a certificate from the Container Apps environment by certificate thumbprint
+      text: |
+          az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --thumbprint MyCertificateThumbprint
 """
 
 # Identity Commands
