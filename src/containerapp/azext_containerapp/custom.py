@@ -62,12 +62,13 @@ from ._utils import (_validate_subscription_registered, _get_location_from_resou
                      _update_revision_env_secretrefs, _get_acr_cred, safe_get, await_github_action, repo_url_to_name,
                      validate_container_app_name, _update_weights, get_vnet_location, register_provider_if_needed,
                      generate_randomized_cert_name, _get_name, load_cert_file, check_cert_name_availability,
-                     validate_hostname, patch_new_custom_domain, get_custom_domains, get_resource_group)
+                     validate_hostname, patch_new_custom_domain, get_custom_domains)
 
 from ._ssh_utils import (SSH_DEFAULT_ENCODING, WebSocketConnection, read_ssh, get_stdin_writer, SSH_CTRL_C_MSG,
                          SSH_BACKUP_ENCODING)
 from ._constants import (MAXIMUM_SECRET_LENGTH, MICROSOFT_SECRET_SETTING_NAME, FACEBOOK_SECRET_SETTING_NAME, GITHUB_SECRET_SETTING_NAME,
-                         GOOGLE_SECRET_SETTING_NAME, TWITTER_SECRET_SETTING_NAME, APPLE_SECRET_SETTING_NAME, CONTAINER_APPS_RP)
+                         GOOGLE_SECRET_SETTING_NAME, TWITTER_SECRET_SETTING_NAME, APPLE_SECRET_SETTING_NAME, CONTAINER_APPS_RP,
+                         NAME_INVALID, NAME_ALREADY_EXISTS)
 
 logger = get_logger(__name__)
 
@@ -2385,18 +2386,25 @@ def upload_certificate(cmd, name, resource_group_name, certificate_file, certifi
 
     cert_name = None
     if certificate_name:
-        if not check_cert_name_availability(cmd, resource_group_name, name, certificate_name):
-            msg = 'A certificate with the name {} already exists in {}. If continue with this name, it will be overwritten by the new certificate file.\nOverwrite?'
-            overwrite = prompt_y_n(msg.format(certificate_name, name))
-            if overwrite:
-                cert_name = certificate_name
+        name_availability = check_cert_name_availability(cmd, resource_group_name, name, certificate_name)
+        if not name_availability["nameAvailable"]:
+            if name_availability["reason"] == NAME_ALREADY_EXISTS:
+                msg = '{}. If continue with this name, it will be overwritten by the new certificate file.\nOverwrite?'
+                overwrite = prompt_y_n(msg.format(name_availability["message"]))
+                if overwrite:
+                    cert_name = certificate_name
+            else:
+                raise ValidationError(name_availability["message"] or "Certificate name '{}' is invalid. Please try another name.".format(certificate_name))
         else:
             cert_name = certificate_name
 
     while not cert_name:
         random_name = generate_randomized_cert_name(thumbprint, name, resource_group_name)
-        if check_cert_name_availability(cmd, resource_group_name, name, random_name):
+        check_result = check_cert_name_availability(cmd, resource_group_name, name, random_name)
+        if check_result["nameAvailable"]:
             cert_name = random_name
+        elif not check_result["nameAvailable"] and (check_result["reason"] == NAME_INVALID):
+            raise ValidationError(check_result["message"])
 
     certificate = ContainerAppCertificateEnvelopeModel
     certificate["properties"]["password"] = certificate_password

@@ -24,3 +24,6 @@ APPLE_SECRET_SETTING_NAME = "apple-provider-authentication-secret"
 UNAUTHENTICATED_CLIENT_ACTION = ['RedirectToLoginPage', 'AllowAnonymous', 'RejectWith401', 'RejectWith404']
 FORWARD_PROXY_CONVENTION = ['NoProxy', 'Standard', 'Custom']
 CHECK_CERTIFICATE_NAME_AVAILABILITY_TYPE = "Microsoft.App/managedEnvironments/certificates"
+
+NAME_INVALID = "Invalid"
+NAME_ALREADY_EXISTS = "AlreadyExists"

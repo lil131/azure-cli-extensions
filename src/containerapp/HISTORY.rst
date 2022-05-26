@@ -5,7 +5,7 @@ Release History
 
 0.3.6
 ++++++
-
+* Fixed bug with 'az containerapp env certificate upload' where it shows a misleading message for invalid certificate name
 
 0.3.5
 ++++++
