@@ -2379,7 +2379,7 @@ def list_certificates(cmd, name, resource_group_name, location=None, certificate
             handle_raw_exception(e)
 
 
-def upload_certificate(cmd, name, resource_group_name, certificate_file, certificate_name=None, certificate_password=None, location=None):
+def upload_certificate(cmd, name, resource_group_name, certificate_file, certificate_name=None, certificate_password=None, location=None, prompt=False):
     _validate_subscription_registered(cmd, CONTAINER_APPS_RP)
 
     blob, thumbprint = load_cert_file(certificate_file, certificate_password)
@@ -2390,11 +2390,15 @@ def upload_certificate(cmd, name, resource_group_name, certificate_file, certifi
         if not name_availability["nameAvailable"]:
             if name_availability["reason"] == NAME_ALREADY_EXISTS:
                 msg = '{}. If continue with this name, it will be overwritten by the new certificate file.\nOverwrite?'
-                overwrite = prompt_y_n(msg.format(name_availability["message"]))
+                overwrite = True
+                if prompt:
+                    overwrite = prompt_y_n(msg.format(name_availability["message"]))
+                else:
+                    logger.warning('{}. It will be overwritten by the new certificate file.'.format(name_availability["message"]))
                 if overwrite:
                     cert_name = certificate_name
             else:
-                raise ValidationError(name_availability["message"] or "Certificate name '{}' is invalid. Please try another name.".format(certificate_name))
+                raise ValidationError(name_availability["message"])
         else:
             cert_name = certificate_name
 
