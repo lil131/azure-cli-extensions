@@ -5,6 +5,8 @@ Release History
 
 0.3.9
 ++++++
+* 'az containerapp env certificate upload': Fix bug where certificate uploading failed with error "Certificate must contain one private key."
+* 'az containerapp env certificate upload': Fix bug where replacing invalid character in certificate name failed"
 
 0.3.8
 ++++++
